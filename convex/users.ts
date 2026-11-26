@@ -14,16 +14,21 @@ export const getUserById = query({
       throw new ConvexError("User not found");
     }
 
-    return user;
+    return {
+      _id: user._id,
+      name: user.name,
+      imageUrl: user.imageUrl,
+      clerkId: user.clerkId,
+    }
   },
 });
 
-// this query is used to get the top user by podcast count. first the podcast is sorted by views and then the user is sorted by total podcasts, so the user with the most podcasts will be at the top.
+
 export const getTopUserByPodcastCount = query({
   args: {},
   handler: async (ctx, args) => {
     const user = await ctx.db.query("users").collect();
-
+    
     const userData = await Promise.all(
       user.map(async (u) => {
         const podcasts = await ctx.db
@@ -34,7 +39,10 @@ export const getTopUserByPodcastCount = query({
         const sortedPodcasts = podcasts.sort((a, b) => b.views - a.views);
 
         return {
-          ...u,
+          _id: u._id,
+          name: u.name,
+          imageUrl: u.imageUrl,
+          clerkId: u.clerkId,
           totalPodcasts: podcasts.length,
           podcast: sortedPodcasts.map((p) => ({
             podcastTitle: p.podcastTitle,

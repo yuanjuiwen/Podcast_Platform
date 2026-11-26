@@ -1,6 +1,8 @@
 import React from 'react'
 import LeftSideBar from '@/components/leftSideBar';
 import RightSideBar from '@/components/rightSideBar';
+import { Toaster } from '@/components/ui/toast';
+import PodcastPlayer from '@/components/PodcastPlayer';
 
 
 export default function RootGroupLayout({
@@ -11,14 +13,16 @@ export default function RootGroupLayout({
 
 
   return (
-    <div className='relative flex flex-col '>
-        <main className='relative mx-auto flex w-full max-w-6xl '>
+    <div className='relative flex h-screen flex-col overflow-hidden'>
+        <main className='relative flex min-h-0 w-full flex-1'>
             <LeftSideBar />
-
-            <section className=' mt-12 mx-10 flex min-h-screen min-w-0 flex-1'>
-              {children}
-            </section>
-            
+             <div className="relative min-w-0 flex-1">
+                <section className=' h-full overflow-y-auto px-14 pt-12 pb-12 no-scrollbar'>
+                  <div className='w-full max-w-2xl mx-auto'>{children}</div>
+                  <Toaster />
+                </section>
+              <PodcastPlayer/>
+            </div>
 
             <RightSideBar/>
         </main>

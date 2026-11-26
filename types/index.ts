@@ -1,5 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
 import { Id } from "@/convex/_generated/dataModel";
+import { Doc } from "@/convex/_generated/dataModel";
+
 
 
 export interface GeneratePodcastProps {
@@ -10,4 +12,70 @@ export interface GeneratePodcastProps {
   voicePrompt: string;
   setVoicePrompt: Dispatch<SetStateAction<string>>;
   setAudioDuration: Dispatch<SetStateAction<number>>;
+  instruction: string;
+}
+
+export interface GenerateThumbnailProps {
+  setImage: Dispatch<SetStateAction<string>>;
+  setImageStorageId: Dispatch<SetStateAction<Id<"_storage"> | null>>;
+  imageUrl: string;
+  imagePrompt: string;
+  setImagePrompt: Dispatch<SetStateAction<string>>;
+}
+
+export interface Podcast {
+  _id: Id<"podcasts">;
+  _creationTime: number;
+  audioStorageId: Id<"_storage"> | null;
+  user: Id<"users">;
+  podcastTitle: string;
+  podcastDescription: string;
+  audioUrl: string | null;
+  imageUrl: string | null;
+  imageStorageId: Id<"_storage"> | null;
+  author: string;
+  authorId: string;
+  authorImageUrl: string;
+  voicePrompt: string;
+  imagePrompt: string | null;
+  voiceType: string;
+  audioDuration: number;
+  views: number;
+}
+
+export interface PodcastDetailPlayerProps{
+  audioUrl?: string;
+  podcastTitle: string;
+  author: string;
+  isOwner: boolean;
+  imageUrl?: string;
+  podcastId: Id<'podcasts'>
+  imageStorageId?: Id<'_storage'>
+  audioStorageId?: Id<"_storage">;
+  authorImageUrl: string;
+  authorId: string;
+}
+
+export interface AudioProps {
+  title: string;
+  audioUrl: string;
+  author: string;
+  imageUrl: string;
+  podcastId: string;
+}
+
+export interface AudioContextType {
+  audio: AudioProps | undefined;
+  setAudio: React.Dispatch<React.SetStateAction<AudioProps | undefined>>;
+}
+
+export interface ProfilePodcastProps {
+  podcasts: Doc<"podcasts">[];
+  listeners: number;
+}
+
+export interface ProfileCardProps {
+  podcastData: ProfilePodcastProps;
+  imageUrl: string;
+  userFirstName: string;
 }

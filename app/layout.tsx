@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import "./globals.css";
 import  ConvexClerkProvider  from "./Provider/ConvexClerkProvider";
 import { Toaster } from "@/components/ui/toast";
+import AudioProvider from "./Provider/AudioProvider";
 
 const geistSans = Inter({
   variable: "--font-sans",
@@ -30,7 +31,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <body className="min-h-full flex flex-col">
           <Suspense>
             <ConvexClerkProvider>
+              <AudioProvider>
               {children}
+              </AudioProvider>
               <Toaster />
             </ConvexClerkProvider>
           </Suspense>

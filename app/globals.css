@@ -70,6 +70,9 @@
   --color-black-5: #2e3036;
   --color-black-6: #24272c;
   --color-orange-1: #f97535;
+  --color-green-1: #a3e635;
+  --color-green-2: #80b52a;
+  --color-green-3: #6a9a1f;
   --color-gray-1: #71788b;
 }
 
@@ -158,13 +161,13 @@
   @apply text-16 placeholder:text-16 bg-black-1 rounded-[6px] placeholder:text-gray-1 border-none text-gray-1;
 }
 @utility podcast_grid {
-  @apply grid grid-cols-1 gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4;
+  @apply grid grid-cols-1 gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 ;
 }
 @utility right_sidebar {
-  @apply sticky  shrink-0 right-0 top-0 flex  flex-col overflow-y-hidden border-none px-[30px] pt-8 max-xl:hidden;
+  @apply relative h-full shrink-0 flex w-70 flex-col overflow-y-auto border-none pl-8 pr-8 pt-8 max-xl:hidden;
 }
 @utility left_sidebar {
-  @apply sticky shrink-0 left-0 top-0 flex w-fit flex-col justify-between border-none pt-8 text-white-1 max-md:hidden  lg:px-3;
+  @apply relative h-full shrink-0 flex w-70 overflow-y-auto flex-col justify-between border-none pt-8 text-white-1 max-md:hidden  lg:px-3;
 }
 @utility generate_thumbnail {
   @apply mt-[30px] flex w-full max-w-[520px] flex-col justify-between gap-2 rounded-lg border border-black-6 bg-black-1 px-2.5 py-2 md:flex-row md:gap-0;
@@ -203,6 +206,19 @@
   @apply text-[32px] leading-normal;
 }
 
+@utility no-scrollbar {
+  scrollbar-width: none;         
+  -ms-overflow-style: none;      
+  &::-webkit-scrollbar {
+    display: none;             
+  }
+}
+
+@utility glassmorphism-black {
+  background: rgba(40, 40, 40, 0.2);
+  backdrop-filter: blur(30px);
+}
+
 @keyframes ripple {
   0% {
     transform: translate(-50%, -50%) scale(0);
@@ -215,4 +231,40 @@
     transform: translate(-50%, -50%) scale(1);
     opacity: 0;
   }
+}
+
+
+.left_sidebar::after {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  right: 0;
+  width: 1px;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    var(--sidebar-border) 50%,
+    var(--sidebar-border) 80%,
+    transparent
+  );
+}
+
+
+
+
+.right_sidebar::after {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  left: 0;
+  width: 1px;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    var(--sidebar-border) 50%,
+    var(--sidebar-border) 80%,
+    transparent
+  );
 }
