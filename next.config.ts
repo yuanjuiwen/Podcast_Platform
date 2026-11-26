@@ -16,6 +16,14 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'fastly.picsum.photos',
       },
+      {
+        protocol: "https",
+        hostname: "*.convex.cloud",
+      },
+   
+      { protocol: "https", hostname: "img.clerk.com" },
+      { protocol: "https", hostname: "*.convex.cloud" },
+
     ],
   },
   

@@ -13,6 +13,19 @@ import { useAction,useMutation } from 'convex/react'
 import { api } from '@/convex/_generated/api'
 import { generateUploadUrl } from '@/convex/file'
 import { toast } from "@/components/ui/toast" 
+import {
+  AudioPlayer,
+  AudioPlayerElement,
+  AudioPlayerControlBar,
+  AudioPlayerPlayButton,
+  AudioPlayerSeekBackwardButton,
+  AudioPlayerSeekForwardButton,
+  AudioPlayerTimeDisplay,
+  AudioPlayerTimeRange,
+  AudioPlayerDurationDisplay,
+  AudioPlayerMuteButton,
+  AudioPlayerVolumeRange,
+} from "@/components/ai-elements/audio-player";
 
 
 
@@ -132,13 +145,30 @@ const GeneratePodcast = ({
                  onChange={(e) => setVoicePrompt(e.target.value)}
                  id="voicePrompt"
                  placeholder='Provide some context...'
-                 className="min-h-24"
+                 className="min-h-24 resize-none"
                 />
             </Field>
 
             <Button onClick={generatePodcast}
-            disabled={isGenerating} className='w-fit'>Generate</Button>
-        
+            disabled={isGenerating} className='w-fit cursor-pointer self-end'>Generate</Button>
+            {audio && (
+                <AudioPlayer className="mt-5">
+                    <AudioPlayerElement
+                    src={audio}
+                    onLoadedMetadata={(e) => setAudioDuration(e.currentTarget.duration)}
+                    />
+                    <AudioPlayerControlBar>
+                    <AudioPlayerPlayButton />
+                    <AudioPlayerSeekBackwardButton />
+                    <AudioPlayerSeekForwardButton />
+                    <AudioPlayerTimeDisplay />
+                    <AudioPlayerTimeRange />
+                    <AudioPlayerDurationDisplay />
+                    <AudioPlayerMuteButton />
+                    <AudioPlayerVolumeRange />
+                    </AudioPlayerControlBar>
+                </AudioPlayer>
+                            )}
             
         </FieldGroup>
       </FieldSet>

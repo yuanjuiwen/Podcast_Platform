@@ -7,14 +7,18 @@ import { sidebarLinks } from '@/app/constants'
 import { cn } from '@/lib/utils';
 import { usePathname, useRouter } from 'next/navigation'
 import { Icon } from 'lucide-react'
+import { Show, SignedOut, SignOutButton, useUser,useClerk } from '@clerk/nextjs'
+import { Button } from "@/components/ui/button"
 
  const LeftSideBar = () => {
 
   const pathname = usePathname();
   const router = useRouter();
+  const {signOut} = useClerk();
+  const { user } = useUser();
   return (
     <section className='left_sidebar'>
-        <div className='w-full '>
+        <div className='w-full flex flex-col gap-140'>
             <nav className="flex flex-col gap-4">
                 <Link href="/" className='flex items-center cursor-pointer gap-2 px-3 max-lg:justify-center'>
                     <Image src='/icon/logo-icon.svg' alt='logo' width={20} height={20}/>
@@ -23,7 +27,8 @@ import { Icon } from 'lucide-react'
 
                 <div className='flex flex-col gap-1'>
                      {sidebarLinks.map((item) => {
-                    const { icon:Icon, route, label} = item;
+                    const { icon:Icon, label} = item;
+                    const route = item.route === '/profile' ? `/profile/${user?.id}` : item.route;
                     const isActive = pathname === route || pathname.startsWith(`${route}/`);
 
                     return(
@@ -43,6 +48,21 @@ import { Icon } from 'lucide-react'
                 </div>
         
             </nav>
+            <Show when="signed-out">
+                <div>
+                    <Button variant="gradient" className="w-full cursor-pointer">
+                        <Link href = "/sign-in">Sign in</Link>
+                    </Button>
+                </div>
+            </Show>
+            <Show when="signed-in">
+                <div>
+                    <Button variant="gradient" onClick={() => signOut(() => router.push('/'))} className="w-full cursor-pointer">
+                        Log out
+                    </Button>
+                </div>
+            </Show>
+
         </div>
 
     </section>
